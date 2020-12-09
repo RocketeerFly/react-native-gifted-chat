@@ -123,7 +123,7 @@ export default class MessageText<
     if (WWW_URL_PATTERN.test(url)) {
       this.onUrlPress(`http://${url}`)
     } else {
-      const formattedUrl = Platform.OS == 'android' ? lowerCaseSchemeUrl(url) : url
+      const formattedUrl = Platform.OS === 'android' ? lowerCaseSchemeUrl(url) : url
       Linking.canOpenURL(formattedUrl).then(supported => {
         if (!supported) {
           console.error('No handler for URL:', formattedUrl)
