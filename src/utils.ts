@@ -49,3 +49,12 @@ export const warning = (...args: any) =>
 
 export const error = (...args: any) =>
   console.log(headerLog, styleString('red'), ...args)
+
+export const lowerCaseSchemeUrl = (url: string) => {
+  const urlComps = url.split(':')
+  if (urlComps.length > 1) {
+    const comps = urlComps.splice(0, 1, urlComps[0].toLocaleLowerCase())
+    return comps.join()
+  }
+  return url
+}

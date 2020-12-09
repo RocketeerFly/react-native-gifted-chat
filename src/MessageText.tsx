@@ -8,13 +8,14 @@ import {
   StyleProp,
   ViewStyle,
   TextStyle,
+  Platform,
 } from 'react-native'
 
 // @ts-ignore
 import ParsedText from 'react-native-parsed-text'
 import Communications from 'react-native-communications'
 import { LeftRightStyle, IMessage } from './Models'
-import { StylePropType } from './utils'
+import { StylePropType, lowerCaseSchemeUrl } from './utils'
 
 const WWW_URL_PATTERN = /^www\./i
 
@@ -122,11 +123,12 @@ export default class MessageText<
     if (WWW_URL_PATTERN.test(url)) {
       this.onUrlPress(`http://${url}`)
     } else {
-      Linking.canOpenURL(url).then(supported => {
+      const formattedUrl = Platform.OS == 'android' ? lowerCaseSchemeUrl(url) : url
+      Linking.canOpenURL(formattedUrl).then(supported => {
         if (!supported) {
-          console.error('No handler for URL:', url)
+          console.error('No handler for URL:', formattedUrl)
         } else {
-          Linking.openURL(url)
+          Linking.openURL(formattedUrl)
         }
       })
     }
